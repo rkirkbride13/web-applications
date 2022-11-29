@@ -11,17 +11,17 @@ describe Application do
   let(:app) { Application.new }
 
   context "GET /albums" do
-    it 'returns 200 OK and list of albums as HTML page' do
+    it 'returns 200 OK and list of albums as HTML page with links' do
       response = get('/albums')
       expect(response.status).to eq(200)
       expect(response.body).to include('
-      Title: Surfer Rosa
+      Title: <a href="/albums/2"> Surfer Rosa </a>
       Released: 1988')
       expect(response.body).to include('
-      Title: Waterloo
+      Title: <a href="/albums/3"> Waterloo </a>
       Released: 1974')
       expect(response.body).to include('
-      Title: Baltimore
+      Title: <a href="/albums/9"> Baltimore </a>
       Released: 1978')
     end
   end
