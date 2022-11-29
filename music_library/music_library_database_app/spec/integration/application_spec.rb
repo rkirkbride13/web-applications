@@ -33,4 +33,13 @@ describe Application do
       expect(response.body).to include('Voyager')
     end
   end
+
+  context "GET /artists" do
+    it "returns status 200 OK and the list of artists" do
+      response = get('/artists')
+      expected_response = 'Pixies, ABBA, Taylor Swift, Nina Simone, Kiasmos'
+      expect(response.status).to eq(200)
+      expect(response.body).to eq(expected_response)
+    end
+  end
 end
