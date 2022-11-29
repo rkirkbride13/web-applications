@@ -42,4 +42,15 @@ describe Application do
       expect(response.body).to eq(expected_response)
     end
   end
+
+  context "POST /albums" do
+    it "returns status 200 OK and creates an artist. List artists to check creation" do
+      response = post('/artists', name: 'Wild nothing', genre: 'Indie')
+      expect(response.status).to eq 200
+      expect(response.body).to eq ''
+      
+      response = get('/artists')
+      expect(response.body).to eq 'Pixies, ABBA, Taylor Swift, Nina Simone, Kiasmos, Wild nothing'
+    end
+  end
 end
