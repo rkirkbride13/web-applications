@@ -11,11 +11,18 @@ describe Application do
   let(:app) { Application.new }
 
   context "GET /albums" do
-    it 'returns 200 OK and list of albums' do
+    it 'returns 200 OK and list of albums as HTML page' do
       response = get('/albums')
-      expected_response = 'Surfer Rosa, Waterloo, Super Trouper, Bossanova, Lover, Folklore, I Put a Spell on You, Baltimore, Here Comes the Sun, Fodder on My Wings, Ring Ring'
       expect(response.status).to eq(200)
-      expect(response.body).to eq(expected_response)
+      expect(response.body).to include('
+      Title: Surfer Rosa
+      Released: 1988')
+      expect(response.body).to include('
+      Title: Waterloo
+      Released: 1974')
+      expect(response.body).to include('
+      Title: Baltimore
+      Released: 1978')
     end
   end
 
@@ -51,6 +58,36 @@ describe Application do
       
       response = get('/artists')
       expect(response.body).to eq 'Pixies, ABBA, Taylor Swift, Nina Simone, Kiasmos, Wild nothing'
+    end
+  end
+
+  context "GET /albums/:id" do
+    it "returns a single album with id 2" do
+      response = get('/albums/2')
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<h1> Surfer Rosa </h1>')
+      expect(response.body).to include('Release year: 1988')
+      expect(response.body).to include('Artist: Pixies')
+    end
+
+    it "returns a single album with id 3" do
+      response = get('/albums/3')
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<h1> Waterloo </h1>')
+      expect(response.body).to include('Release year: 1974')
+      expect(response.body).to include('Artist: ABBA')
+    end
+  end
+
+  context "GET /" do
+    it "returns a Hello page if the password is correct" do
+      response = get('/', password: 'Password1')
+      expect(response.body).to include ('Hello!')
+    end
+
+    it "returns a Access Forbidden page if the password is incorrect" do
+      response = get('/', password: 'wrong')
+      expect(response.body).to include ('Access forbidden!')
     end
   end
 end
