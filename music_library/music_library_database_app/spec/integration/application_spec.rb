@@ -42,11 +42,15 @@ describe Application do
   end
 
   context "GET /artists" do
-    it "returns status 200 OK and the list of artists" do
+    it "returns status 200 OK and the list of artists as HTML page with links" do
       response = get('/artists')
-      expected_response = 'Pixies, ABBA, Taylor Swift, Nina Simone, Kiasmos'
       expect(response.status).to eq(200)
-      expect(response.body).to eq(expected_response)
+      expect(response.body).to include('
+      Name: <a href="/artists/2"> ABBA </a>')
+      expect(response.body).to include('
+      Name: <a href="/artists/3"> Taylor Swift </a>')
+      expect(response.body).to include('
+      Name: <a href="/artists/4"> Nina Simone </a>')
     end
   end
 
@@ -57,7 +61,7 @@ describe Application do
       expect(response.body).to eq ''
       
       response = get('/artists')
-      expect(response.body).to eq 'Pixies, ABBA, Taylor Swift, Nina Simone, Kiasmos, Wild nothing'
+      expect(response.body).to include('Wild nothing')
     end
   end
 
@@ -76,6 +80,22 @@ describe Application do
       expect(response.body).to include('<h1> Waterloo </h1>')
       expect(response.body).to include('Release year: 1974')
       expect(response.body).to include('Artist: ABBA')
+    end
+  end
+
+  context "GET /artists/:id" do
+    it "returns a single artist with id 1" do
+      response = get('/artists/1')
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<h1> Pixies </h1>')
+      expect(response.body).to include('Genre: Rock')
+    end
+
+    it "returns a single artist with id 3" do
+      response = get('/artists/3')
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<h1> Taylor Swift </h1>')
+      expect(response.body).to include('Genre: Pop')
     end
   end
 
