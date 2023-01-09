@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset=utf-8>
+    <title>Greeter app</title>
+  </head>
+  <body>
+    <p>
+    <% if @name.include?('<') %>
+      Don't even try it
+    <% else %>
+      Hi <%=@name%>!
+    <% end %>
+    </p>
+  </body>
+</html>

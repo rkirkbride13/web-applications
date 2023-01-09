@@ -10,13 +10,35 @@ describe Application do
   # class so our tests work.
   let(:app) { Application.new }
 
+  context "GET /helloHTML" do
+    it "returns hello and status 200 OK" do
+      response = get('/helloHTML')
+      expect(response.status).to eq(200)
+      expect(response.body).to include("<h1>Hello!</h1>")
+      expect(response.body).to include('<img src="hello.jpg" />')
+    end
+  end
+
+  context "GET /helloERB" do
+    it "returns hello with a given name and status 200 OK" do
+      response = get('/helloERB', name: "Robbie")
+      expect(response.status).to eq(200)
+      expect(response.body).to include("<h1>Hello Robbie!</h1>")
+      expect(response.body).to include('<img src="hello.jpg" />')
+    end
+
+    it "returns hello with a differenet name and status 200 OK" do
+      response = get('/helloERB', name: "Ella")
+      expect(response.status).to eq(200)
+      expect(response.body).to include("<h1>Hello Ella!</h1>")
+      expect(response.body).to include('<img src="hello.jpg" />')
+    end
+  
+  end
+  
   context "GET /names to pass with the correct names" do
     it "returns 200 OK with the right content" do
-      # Send a GET request to /
-      # and returns a response object we can test.
       response = get("/names?name=Julia, Mary, Karim")
-
-      # Assert the response status code and body.
       expect(response.status).to eq(200)
       expect(response.body).to eq("Julia, Mary, Karim")
     end

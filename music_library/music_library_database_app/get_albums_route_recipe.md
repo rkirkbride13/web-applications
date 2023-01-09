@@ -1,4 +1,4 @@
-# GET /albums Route Design Recipe
+# GET / Route Design Recipe
 
 _Copy this design recipe template to test-drive a Sinatra route._
 
@@ -11,7 +11,7 @@ You'll need to include:
   * or body parameters (passed in the request body)
 
 Method: GET
-Path: /albums
+Path: /
 
 ## 2. Design the Response
 
@@ -24,10 +24,8 @@ Your response might return plain text, JSON, or HTML code.
 _Replace the below with your own design. Think of all the different possible responses your route will return._
 
 ```
-Surfer Rosa
-Waterloo
-Super Trouper
-...
+A list of all the peeps
+
 ```
 
 ## 3. Write Examples
@@ -37,15 +35,13 @@ _Replace these with your own design._
 ```
 # Request:
 
-GET /albums
+GET /
 
 # Expected response:
 
 Response for 200 OK
-Surfer Rosa
-Waterloo
-Super Trouper
-...
+
+A list of all the peeps
 ```
 
 ## 4. Encode as Tests Examples
@@ -61,12 +57,11 @@ describe Application do
 
   let(:app) { Application.new }
 
-  context "GET /albums" do
-    it 'returns 200 OK and list of albums' do
-      response = get('/albums')
-      expected_response = 'Surfer Rosa, Waterloo, Super Trouper, Bossanova, Lover, Folklore, I Put a Spell on You, Baltimore, Here Comes the Sun, Fodder on My Wings, Ring Ring'
+  context "GET /" do
+    it 'returns 200 OK and list of peeps' do
+      response = get('/')
       expect(response.status).to eq(200)
-      expect(response.body).to eq(expected_response)
+      expect(response.body).to include()
     end
   end
 end

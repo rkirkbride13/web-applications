@@ -8,6 +8,15 @@ class Application < Sinatra::Base
     register Sinatra::Reloader
   end
 
+  get '/helloHTML' do
+    return erb(:helloHTML)
+  end
+
+  get '/helloERB' do
+    @name = params[:name]
+    return erb(:helloERB)
+  end
+
   get '/names' do
     name = params[:name]
   
